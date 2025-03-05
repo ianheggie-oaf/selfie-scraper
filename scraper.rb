@@ -102,6 +102,14 @@ end
 end
 
 puts '=' * 60,
+  "UPTIME"
+system 'uptime'
+
+puts '=' * 60,
+  "FREE MEMORY"
+system 'free -m'
+
+puts '=' * 60,
   "That's All Folks!"
 #
 # # An arbitrary query against the database
