@@ -59,8 +59,8 @@ puts '=' * 60,
 end
 
 puts '=' * 60,
-  "noroc; nproc --all"
-system 'noroc; nproc --all'
+  "nproc; nproc --all"
+system 'nproc; nproc --all'
 
 puts '=' * 60,
   "cpuinfo"
@@ -74,30 +74,30 @@ puts "Available memory: #{`cat /proc/meminfo | grep MemAvailable`}"
 puts "Dyno type: #{ENV['DYNO'] || 'unknown'}"
 puts "Max file descriptors: #{`ulimit -n`.chomp}"
 
-require 'benchmark'
 require 'net/http'
 
 def test_thread_count(count)
   memory_before = `ps -o rss= -p #{Process.pid}`.to_i
   
-  time = Benchmark.realtime do
-    threads = count.times.map do |i|
-      Thread.new do
-        # Simulate your HTTP request workload
-        Net::HTTP.get(URI("https://example.com"))
-        sleep 0.1 # Simulate some processing
-      end
+  before = Time.now
+  threads = count.times.map do |i|
+    Thread.new do
+      # Simulate your HTTP request workload
+      Net::HTTP.get(URI("https://example.com"))
+      sleep 0.1 # Simulate some processing
     end
-    threads.each(&:join)
   end
+  threads.each(&:join)
   
+  after = Time.now
   memory_after = `ps -o rss= -p #{Process.pid}`.to_i
   memory_used = memory_after - memory_before
   
-  puts "Threads: #{count}, Time: #{time.round(2)}s, Memory: #{memory_used}KB"
+  puts "Threads: #{count}, Time: #{(after - before).round(3)}s, Memory: #{memory_used}KB"
 end
 
 [1, 5, 10, 20, 30, 50, 75, 100].each do |count|
+  puts '=' * 60, "Testing thread count: #{count} x {get example.com and sleepo 0.1} ..."
   test_thread_count(count)
 end
 
