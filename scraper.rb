@@ -72,7 +72,6 @@ puts "Ruby version: #{RUBY_VERSION}"
 puts "CPU cores: #{Etc.nprocessors}"
 puts "Available memory: #{`cat /proc/meminfo | grep MemAvailable`}"
 puts "Dyno type: #{ENV['DYNO'] || 'unknown'}"
-puts "Max file descriptors: #{`ulimit -n`.chomp}"
 
 require 'net/http'
 
