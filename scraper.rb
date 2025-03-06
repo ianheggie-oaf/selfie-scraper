@@ -109,6 +109,10 @@ puts '=' * 60,
 system 'free -m'
 
 puts '=' * 60,
+  "type parallel ; parallel --version ; parallel --help"
+system 'type parallel ; parallel --version ; parallel --help'
+
+puts '=' * 60,
   "That's All Folks!"
 #
 # # An arbitrary query against the database
