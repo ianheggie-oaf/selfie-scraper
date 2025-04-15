@@ -41,7 +41,7 @@ system 'df -m'
 
 puts '=' * 60,
   "Files and Dirs"
-#system 'find | xargs ls -ld'
+system 'find | xargs ls -ld'
 
 [
 './.bundle/config',
