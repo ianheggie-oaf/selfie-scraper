@@ -11,8 +11,8 @@ ruby '3.2.2'
 # Core dependencies
 gem 'activesupport', '~> 7.0.8' # Reduced for compatibility, consider 8.0.2
 gem 'mechanize', '~> 2.8.5' # Older version for nokogiri compatibility
-# gem "nokogiri", "~> 1.18.4", platform: 'ruby' # Compatible version, no platform constraint
-gem 'nokogiri', '~> 1.15.0' # Compatible version, no platform constraint
+gem "nokogiri", "1.16.5"
+#gem 'nokogiri', '~> 1.15.0' # Compatible version, no platform constraint
 gem 'scraperwiki', git: 'https://github.com/openaustralia/scraperwiki-ruby.git',
                    branch: 'morph_defaults'
 gem 'sqlite3', '~> 1.6.3' # Older version that works on heroku-18
