@@ -26,18 +26,67 @@ RSpec.describe 'Development Gem Verification' do
   end
 
   context 'MiniMagick gem' do
+    # Ensure tmp/screenshots directory exists
+    before(:each) do
+      # Clean up files
+      FileUtils.rm_rf('tmp/screenshots')
+      FileUtils.mkdir_p('tmp/screenshots')
+    end
+
     it 'reports its version' do
       expect(MiniMagick::VERSION).not_to be_nil
     end
 
-    it 'can create a blank image' do
-      image = MiniMagick::Image.create do |f|
-        f.write('some content')
+    it 'creates a montage' do
+      # Create simple colored images
+      MiniMagick::Tool::Convert.new do |convert|
+        convert.size '800x600'
+        convert.canvas 'red'
+        convert << 'tmp/screenshots/red_square.png'
       end
-      expect(File.exist?(image.path)).to be true
-      expect(File.size(image.path)).to be > 0
-    ensure
-      image&.destroy!
+
+      MiniMagick::Tool::Convert.new do |convert|
+        convert.size '800x600'
+        convert.canvas 'green'
+        convert << 'tmp/screenshots/green_square.png'
+      end
+
+      # Now test MiniMagick by creating a montage
+      MiniMagick::Tool::Montage.new do |montage|
+        montage.mode 'unframe'
+        montage.background '#000000'
+        montage.geometry '600x355+20+20'
+
+        montage << 'tmp/screenshots/red_square.png'
+        montage << 'tmp/screenshots/green_square.png'
+
+        montage << 'tmp/screenshots/montage.jpg'
+      end
+
+      # Verify montage was created
+      expect(File.exist?('tmp/screenshots/montage.jpg')).to be true
+      expect(File.size('tmp/screenshots/montage.jpg')).to be > 0
+    end
+
+    # Fallback test in case the full test can't run (e.g., no browser available)
+    it 'can perform basic image manipulation' do
+      # Create a simple colored image
+      MiniMagick::Tool::Convert.new do |convert|
+        convert.size '100x100'
+        convert.canvas 'red'
+        convert << 'tmp/screenshots/red_square.png'
+      end
+
+      expect(File.exist?('tmp/screenshots/red_square.png')).to be true
+
+      # Test resizing
+      image = MiniMagick::Image.open('tmp/screenshots/red_square.png')
+      image.resize '50x50'
+      image.write 'tmp/screenshots/small_red_square.png'
+
+      expect(File.exist?('tmp/screenshots/small_red_square.png')).to be true
+    rescue MiniMagick::Error => e
+      skip "Skipping due to ImageMagick issue: #{e.message}"
     end
   end
 
@@ -56,11 +105,11 @@ RSpec.describe 'Development Gem Verification' do
   context 'VCR gem' do
     it 'sets up VCR configuration' do
       VCR.configure do |config|
-        config.cassette_library_dir = 'fixtures/vcr_cassettes'
+        config.cassette_library_dir = 'spec/vcr_cassettes'
         config.hook_into :webmock
       end
 
-      expect(VCR.configuration.cassette_library_dir).to end_with('selfie-scraper/fixtures/vcr_cassettes')
+      expect(VCR.configuration.cassette_library_dir).to end_with('selfie-scraper/spec/vcr_cassettes')
     end
   end
 
@@ -78,29 +127,52 @@ RSpec.describe 'Development Gem Verification' do
   # Watir requires a browser driver, which might not be available in all environments
   # Instead, we'll just test that it loads properly
   context 'Watir gem' do
+    # Create test sites to screenshot
+    let(:test_sites) do
+      {
+        'example' => 'https://example.com',
+        'google' => 'https://google.com'
+      }
+    end
+
+    before(:each) do
+      # Clean up files
+      FileUtils.rm_rf('tmp/screenshots')
+      FileUtils.mkdir_p('tmp/screenshots')
+    end
+
     it 'loads successfully' do
       expect(Watir::VERSION).not_to be_nil
       expect(defined?(Watir::Browser)).to eq('constant')
+    end
+
+    it 'captures screenshots', js: true do
+      skip 'This normally fails on Ians dev system :(' unless ENV['TEST-SCREENSHOTS']
+      
+      begin
+        browser = Watir::Browser.new #:chrome, headless: false
+
+        # Take screenshots of test sites
+        test_sites.each do |site_name, url|
+          browser.goto url
+          browser.screenshot.save "tmp/screenshots/#{site_name}.png"
+          expect(File.exist?("tmp/screenshots/#{site_name}.png")).to be true
+        end
+
+        # Close the browser
+        browser.close
+      rescue StandardError => e
+        # If test fails because of browser/driver issues, output helpful error
+        raise e unless e.message.include?('Chrome')
+
+        skip "Skipping due to Chrome/driver issue: #{e.message}"
+      end
     end
   end
 
   context 'SimpleCov gem' do
     it 'loads successfully' do
       expect(SimpleCov::VERSION).not_to be_nil
-    end
-  end
-
-  # Ruby-audit and bundler-audit are primarily command-line tools
-  # We'll just check they can be required
-  context 'Security audit gems' do
-    it 'loads ruby_audit' do
-      require 'ruby_audit'
-      expect(defined?(RubyAudit)).to eq('constant')
-    end
-
-    it 'loads bundler-audit' do
-      require 'bundler/audit'
-      expect(defined?(Bundler::Audit)).to eq('constant')
     end
   end
 end

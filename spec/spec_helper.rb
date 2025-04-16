@@ -42,16 +42,23 @@ end
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
 
-# Configure VCR if you plan to use it
-begin
-  require 'vcr'
-  VCR.configure do |config|
-    config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
-    config.hook_into :webmock
-    config.configure_rspec_metadata!
-    # Add URL sensitive data filters if needed
-    # config.filter_sensitive_data('<API_KEY>') { ENV['API_KEY'] }
+require 'vcr'
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  config.hook_into :webmock
+
+  # Important: Ignore WebDriver/Selenium requests
+  config.ignore_localhost = true
+  config.ignore_request do |request|
+    # Ignore all Selenium/WebDriver requests
+    request.uri.include?('127.0.0.1') ||
+      request.uri.include?('localhost') ||
+      request.uri.include?('/session') ||
+      request.uri.include?('/wd/hub')
   end
-rescue LoadError
-  # VCR isn't available
+
+  # Allow HTTP connections when no cassette is in use
+  config.allow_http_connections_when_no_cassette = true
+
+  config.configure_rspec_metadata!
 end
