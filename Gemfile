@@ -9,8 +9,9 @@ source 'https://rubygems.org'
 ruby '3.2.2'
 
 # Core dependencies
-#gem 'activesupport', '~> 7.0.8' # Reduced for compatibility, consider 8.0.2
-gem 'activesupport', '~> 7.1.5.1' # Reduced for compatibility, consider 8.0.2
+#gem 'activesupport', '~> 7.0.8' # Reduced for compatibility
+#gem 'activesupport', '~> 7.1.5.1' # Sec support ends 01 Oct 2025
+gem 'activesupport', '~> 7.2.2.1' # Sec support ends 09 Aug 2026
 gem 'mechanize', '~> 2.8.5' # Older version for nokogiri compatibility
 #gem "nokogiri", "1.18.3" # Fixes GHSA-vvfq-8hwr-qm4m BUT fails to run on morph with
 # /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.28' not found
