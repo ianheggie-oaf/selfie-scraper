@@ -17,15 +17,16 @@ gem 'scraperwiki', git: 'https://github.com/openaustralia/scraperwiki-ruby.git',
                    branch: 'morph_defaults'
 gem 'sqlite3', '~> 1.6.3' # Older version that works on heroku-18
 
+gem 'bundler-audit'
+gem 'ruby_audit'
+
 # Development and testing dependencies (not used on heroku-18)
 group :development, :test do
-  gem 'bundler-audit'
   gem 'json', '2.10.2' # '>= 2.10.2' - security update
   gem 'mini_magick', '~> 4.12'
   gem 'rake', '~> 13.0' # Required update for Ruby 3.2
   gem 'rspec', '~> 3.12' # Latest stable
   gem 'rubocop', '~> 1.57' # Latest with good Ruby 3.x support
-  gem 'ruby_audit'
   gem 'simplecov', '~> 0.22.0', require: false
   gem 'timecop', '~> 0.9'
   gem 'vcr', '~> 6.2'
