@@ -4,7 +4,7 @@
 
 source "https://rubygems.org"
 
-ruby "3.2.8"
+ruby "3.3.8"
 
 # Core dependencies
 gem "activesupport", "~> 7.0.8" # Reduced for compatibility
