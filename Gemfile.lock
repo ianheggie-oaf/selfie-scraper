@@ -165,21 +165,21 @@ PLATFORMS
 DEPENDENCIES
   activesupport (~> 8.0.2)
   bundler-audit
-  json (= 2.10.2)
-  mechanize (~> 2.14.0)
-  mini_magick (~> 4.12)
-  nokogiri (~> 1.17.0)
-  rake (~> 13.0)
-  rspec (~> 3.12)
-  rubocop (~> 1.57)
+  json (~> 2.10)
+  mechanize (~> 2.14)
+  mini_magick (~> 4.13)
+  nokogiri (~> 1.17.2)
+  rake (~> 13.2)
+  rspec (~> 3.13)
+  rubocop (~> 1.75)
   ruby_audit
   scraperwiki!
   simplecov (~> 0.22.0)
   sqlite3 (~> 2.4.1)
   timecop (~> 0.9)
-  vcr (~> 6.2)
+  vcr (~> 6.3)
   watir (~> 7.3)
-  webmock (~> 3.19)
+  webmock (~> 3.25)
 
 RUBY VERSION
    ruby 3.2.2p53
