@@ -105,11 +105,11 @@ RSpec.describe 'Development Gem Verification' do
   context 'VCR gem' do
     it 'sets up VCR configuration' do
       VCR.configure do |config|
-        config.cassette_library_dir = 'spec/vcr_cassettes'
+        config.cassette_library_dir = 'tmp/vcr_cassettes'
         config.hook_into :webmock
       end
 
-      expect(VCR.configuration.cassette_library_dir).to end_with('selfie-scraper/spec/vcr_cassettes')
+      expect(VCR.configuration.cassette_library_dir).to end_with('selfie-scraper/tmp/vcr_cassettes')
     end
   end
 

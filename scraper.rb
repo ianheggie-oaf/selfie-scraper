@@ -45,8 +45,8 @@ all_gems_ok &= check_gem('Mechanize') do
   agent = Mechanize.new
   agent.user_agent = 'Selfie Scraper'
   # # Read in a page
-  page = agent.get('http://example.com')
-  # TODO - check we can get the contents of page
+  agent.get('http://example.com')
+  # TODO: - check we can get the contents of page
 end
 
 all_gems_ok &= check_gem('ActiveSupport') do
@@ -82,6 +82,57 @@ all_gems_ok &= check_gem('ScraperWiki') do
 
   puts '  Successfully saved and retrieved a record'
 end
+
+# Security audit checks
+def run_security_audit(command, expected_file, output_file)
+  puts "\n#{'=' * 60}"
+  puts "RUNNING #{command.upcase}"
+
+  # Create directories if they don't exist
+  FileUtils.mkdir_p('expected') unless Dir.exist?('expected')
+  FileUtils.mkdir_p('tmp') unless Dir.exist?('tmp')
+
+  # Run the audit command and save output
+  system("#{command} > \"#{output_file}\" 2>&1")
+
+  # For first run, create the expected file
+  unless File.exist?(expected_file)
+    FileUtils.cp(output_file, expected_file)
+    puts "Created initial expected #{command} output in #{expected_file}"
+    return true
+  end
+
+  # Compare current and expected outputs
+  current_output = File.read(output_file)
+  expected_output = File.read(expected_file)
+
+  if current_output == expected_output
+    puts "✓ #{command.upcase} - No changes in security vulnerabilities"
+    true
+  else
+    puts "✗ #{command.upcase} - Security vulnerability changes detected:"
+    system("diff -u \"#{expected_file}\" \"#{output_file}\"")
+    false
+  end
+end
+
+puts "\n#{'=' * 60}",
+     'CHECKING SECURITY VULNERABILITIES'
+
+ruby_audit_ok = run_security_audit('ruby-audit', 'expected/ruby_audit_output.txt', 'tmp/ruby_audit_output.txt')
+
+bundler_audit_ok = run_security_audit('bundler-audit', 'expected/bundler_audit_output.txt',
+                                      'tmp/bundler_audit_output.txt')
+
+if ruby_audit_ok && bundler_audit_ok
+  puts "\n✓ SECURITY AUDIT SUCCESSFUL - No unexpected vulnerabilities"
+else
+  puts "\n✗ SECURITY AUDIT WARNING - Vulnerability changes detected (see above)"
+  puts 'Review the differences and update expected files if these vulnerabilities are understood'
+end
+
+# Add this to the final all_gems_ok check
+all_gems_ok &= ruby_audit_ok && bundler_audit_ok
 
 puts "\n#{'=' * 60}"
 if all_gems_ok

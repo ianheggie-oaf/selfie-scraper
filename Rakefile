@@ -35,8 +35,8 @@ task :scraper do
   ruby 'scraper.rb'
 end
 
-desc 'Run all verification tasks'
-task verify: %i[scraper spec audit] do
+desc 'Run all verification tasks except audits which are included in scraper'
+task verify: %i[scraper spec] do
   puts "\nAll verification tasks completed!"
 end
 

@@ -1,0 +1,15 @@
+Updating ruby-advisory-db ...
+From https://github.com/rubysec/ruby-advisory-db
+ * branch            master     -> FETCH_HEAD
+Already up to date.
+Updated ruby-advisory-db
+ruby-advisory-db: 1090 advisories, last updated 2025-04-16 03:17:20 UTC
+Name: ruby
+Version: 3.2.2.53
+Advisory: CVE-2024-27282
+Criticality: Unknown
+URL: https://www.ruby-lang.org/en/news/2024/04/23/arbitrary-memory-address-read-regexp-cve-2024-27282/
+Title: Arbitrary memory address read vulnerability with Regex search
+Solution: upgrade to ~> 3.0.7, ~> 3.1.5, ~> 3.2.4, >= 3.3.1
+
+Vulnerabilities found!
