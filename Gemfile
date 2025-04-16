@@ -13,7 +13,7 @@ ruby '3.2.2'
 #gem 'activesupport', '~> 7.1.5.1' # Sec support ends 01 Oct 2025
 #gem 'activesupport', '~> 7.2.2.1' # Sec support ends 09 Aug 2026
 gem 'activesupport', '~> 8.0.2'
-# gem 'mechanize', '2.14.0' # January 05, 2025 (143 KB)
+gem 'mechanize', '2.14.0' # January 05, 2025 (143 KB)
 # gem 'mechanize', '2.13.0' # January 02, 2025 (143 KB)
 # gem 'mechanize', '2.12.2' # October 02, 2024 (143 KB)
 # gem 'mechanize', '2.12.1' # August 21, 2024 (143 KB)
@@ -25,22 +25,18 @@ gem 'activesupport', '~> 8.0.2'
 # gem 'mechanize', '2.9.1' # April 17, 2023 (141 KB)
 # gem 'mechanize', '2.9.0' # April 07, 2023 (140 KB)
 # gem 'mechanize', '2.8.5' # June 09, 2022 (140 KB)
-gem 'mechanize', '~> 2.8.5' # Older version for nokogiri compatibility
+# gem 'mechanize', '~> 2.8.5' # Older version for nokogiri compatibility
+
 #gem "nokogiri", "1.18.3" # Fixes GHSA-vvfq-8hwr-qm4m BUT fails to run on morph with
 # /lib/x86_64-linux-gnu/libc.so.6: version `GLIBC_2.28' not found
 gem "nokogiri", "1.16.5" # Fixes GHSA-r95h-9x8f-r3f7
 #gem 'nokogiri', '~> 1.15.0' # Compatible version, no platform constraint
+
 gem 'scraperwiki', git: 'https://github.com/openaustralia/scraperwiki-ruby.git',
                    branch: 'morph_defaults'
-# 2.0.4  2.1.1  2.2.0  2.3.1  2.4.1  2.5.0  2.6.0
-# gem 'sqlite3', '~> 2.5.0' # FAIL
-gem 'sqlite3', '~> 2.4.1'
-# gem 'sqlite3', '~> 2.3.1' # OK
-# gem 'sqlite3', '~> 2.2.0'
-# gem 'sqlite3', '~> 2.1.1' # OK
-# gem 'sqlite3', '~> 2.0.4'
-# gem 'sqlite3', '~> 1.7.3' # ok
-#gem 'sqlite3', '~> 1.6.3' # Older version that works on heroku-18
+
+# gem 'sqlite3', '~> 2.5.0' # FAILS on heroku-18
+gem 'sqlite3', '~> 2.4.1' # OK on heroku-18
 
 gem 'bundler-audit'
 gem 'ruby_audit'
