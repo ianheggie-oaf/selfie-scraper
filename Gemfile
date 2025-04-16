@@ -20,7 +20,14 @@ gem "nokogiri", "1.16.5" # Fixes GHSA-r95h-9x8f-r3f7
 #gem 'nokogiri', '~> 1.15.0' # Compatible version, no platform constraint
 gem 'scraperwiki', git: 'https://github.com/openaustralia/scraperwiki-ruby.git',
                    branch: 'morph_defaults'
-gem 'sqlite3', '~> 1.7.3'
+# 2.0.4  2.1.1  2.2.0  2.3.1  2.4.1  2.5.0  2.6.0
+gem 'sqlite3', '~> 2.5.0'
+# gem 'sqlite3', '~> 2.4.1'
+# gem 'sqlite3', '~> 2.3.1'
+# gem 'sqlite3', '~> 2.2.0'
+# gem 'sqlite3', '~> 2.1.1'
+# gem 'sqlite3', '~> 2.0.4'
+# gem 'sqlite3', '~> 1.7.3' # ok
 #gem 'sqlite3', '~> 1.6.3' # Older version that works on heroku-18
 
 gem 'bundler-audit'
