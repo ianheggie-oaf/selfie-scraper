@@ -34,8 +34,8 @@ gem 'scraperwiki', git: 'https://github.com/openaustralia/scraperwiki-ruby.git',
                    branch: 'morph_defaults'
 # 2.0.4  2.1.1  2.2.0  2.3.1  2.4.1  2.5.0  2.6.0
 # gem 'sqlite3', '~> 2.5.0' # FAIL
-# gem 'sqlite3', '~> 2.4.1'
-gem 'sqlite3', '~> 2.3.1'
+gem 'sqlite3', '~> 2.4.1'
+# gem 'sqlite3', '~> 2.3.1' # OK
 # gem 'sqlite3', '~> 2.2.0'
 # gem 'sqlite3', '~> 2.1.1' # OK
 # gem 'sqlite3', '~> 2.0.4'
