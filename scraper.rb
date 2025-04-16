@@ -114,9 +114,6 @@ system 'type parallel ; parallel --version ; parallel --help'
 
 puts '=' * 60,
   "That's All Folks!"
-#
-# # An arbitrary query against the database
-# ScraperWiki.select("* from data where 'name'='peter'")
 
 # You don't have to do things with the Mechanize or ScraperWiki libraries.
 # You can use whatever gems you want: https://morph.io/documentation/ruby
