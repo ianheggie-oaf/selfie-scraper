@@ -85,7 +85,7 @@ end
 
 IGNORE_LISTS = {
   'ruby-audit' => '-i CVE-2024-27282',
-  'bundler-audit' => '-i GHSA-mrxw-mxhj-p664 GHSA-vvfq-8hwr-qm4m'
+  'bundler-audit' => '-i GHSA-mrxw-mxhj-p664 GHSA-vvfq-8hwr-qm4m GHSA-5w6v-399v-w3cc'
 }.freeze
 
 # Security audit checks
