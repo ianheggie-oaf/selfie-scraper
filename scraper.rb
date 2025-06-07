@@ -214,6 +214,10 @@ puts '=' * 60,
 system 'free -m'
 
 puts '=' * 60,
+     'PACKAGES'
+system 'dpkg -l'
+
+puts '=' * 60,
      "That's All Folks!"
 
 exit all_gems_ok ? 0 : 1
