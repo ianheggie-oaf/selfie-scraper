@@ -144,9 +144,14 @@ puts '=' * 60,
      'DISK FREE'
 system 'df -m'
 
-# puts '=' * 60,
-#   "Files and Dirs"
-# system 'find | xargs ls -ld'
+puts '=' * 60,
+  "Project Directory Listing"
+system 'ls -la'
+
+puts '=' * 60,
+  ".git Directory Listing"
+system 'ls -la .git'
+
 #
 # [
 # './.bundle/config',
