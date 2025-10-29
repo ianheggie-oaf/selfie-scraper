@@ -145,12 +145,20 @@ puts '=' * 60,
 system 'df -m'
 
 puts '=' * 60,
+     'uname -a'
+system 'uname -a 2>&1'
+
+puts '=' * 60,
   "Project Directory Listing"
 system 'ls -la'
 
 puts '=' * 60,
   ".git Directory Listing"
-system 'ls -la .git'
+system 'ls -la .git 2>&1'
+
+puts '=' * 60,
+  "OS release
+system 'cat /etc/os-release 2>&1'
 
 #
 # [
