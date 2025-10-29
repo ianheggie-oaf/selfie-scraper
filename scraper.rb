@@ -157,7 +157,7 @@ puts '=' * 60,
 system 'ls -la .git 2>&1'
 
 puts '=' * 60,
-  "OS release
+  "OS release"
 system 'cat /etc/os-release 2>&1'
 
 #
