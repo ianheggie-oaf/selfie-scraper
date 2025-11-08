@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+t_status = all_gems_ok ? 0 : 1# frozen_string_literal: true
 
 # This is a template for a Ruby scraper on morph.io (https://morph.io)
 # including some code snippets below that you should find helpful
@@ -230,10 +230,12 @@ puts '=' * 60,
      'PACKAGES'
 system 'dpkg -l'
 
-puts '=' * 60,
-     "That's All Folks!"
+exit_status = all_gems_ok ? 0 : 1
 
-exit all_gems_ok ? 0 : 1
+puts '=' * 60,
+     "That's All Folks! (exit status: #{exit_status}: #{exit_status == 0 ? 'OK' : 'ERROR - see gems check above'})"
+
+exit exit_status
 
 # You don't have to do things with the Mechanize or ScraperWiki libraries.
 # You can use whatever gems you want: https://morph.io/documentation/ruby
