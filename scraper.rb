@@ -1,4 +1,4 @@
-t_status = all_gems_ok ? 0 : 1# frozen_string_literal: true
+# frozen_string_literal: true
 
 # This is a template for a Ruby scraper on morph.io (https://morph.io)
 # including some code snippets below that you should find helpful
